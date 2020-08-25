@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head>
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap4.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+</head>
+<body onload="getData();" class="sb-nav-fixed"
+	style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br>
+					<div class="input-group" style="width: 40%;">
+						<label
+							style="margin-right: 20px; color: #17a2b8; margin-top: 6px; text-transform: uppercase; font-weight: 600;">Select
+							Storage</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1"><i
+								class="fa fa-industry"></i></span>
+						</div>
+						<select id="storageid" class="form-control" th:name="storagename"
+							onchange="getData();">
+							<option th:each="storage : ${storageList}"
+								th:value="${storage.id}" th:text="${storage.name}">
+						</select>
+					</div>
+					<br><br>
+					<div id="chartContainer"
+						style="width: 100%; height: 300px; margin-bottom: 20px;"></div>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+</body>
+<script type="text/javascript">
+	var dps = [];
+	var storageName;
+	var loc;
+
+	getData = function() {
+		dps = [];
+		var storageid = $("#storageid").val();
+		console.log('skjdnsd = ' + storageid);
+		$.ajax({
+			url : 'productstatisticsdata',
+			type : 'POST',
+			data : {
+				id : storageid
+			},
+			success : function(response) {
+				$.each(response.data, function(index, value) {
+					dps.push({
+						"y" : value.yValue,
+						"label" : value.labelValue
+					});
+				});
+				storageName = response.storageName;
+				loc = response.loc;
+				loadChart();
+			}
+		});
+
+	}
+	loadChart = function() {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme : "dark1",
+			animationEnabled : true,
+			title : {
+				text : "Storage Name: " + storageName + " , Location: " + loc
+			},
+			data : [ {
+				type : "pie",
+				showInLegend : true,
+				legendText : "{label}",
+				toolTipContent : "{label}: <strong>{y}%</strong>",
+				yValueFormatString : "#,##0.00\"%\"",
+				indexLabel : "{label} ({y})",
+				dataPoints : dps
+			} ]
+		});
+		chart.render();
+	}
+</script>
+</html>

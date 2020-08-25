@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br>
+					<table id="example"
+						class="table table-bordered table-hover table-striped"
+						style="width: 100%;">
+						<thead>
+							<tr align="center">
+								<th>ID</th>
+								<th>Name</th>
+								<th>Product</th>
+								<th>Weight(ton)</th>
+								<th>Cost(per/day)</th>
+								<th>Accepted Date</th>
+								<th>Action</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="request : ${productRequestsList}">
+								<td th:text="${request.product.storage.id}"></td>
+								<td th:text="${request.product.storage.name}"></td>
+								<td th:text="${request.product.name}"></td>
+								<td>[[${request.capacity}]] Ton</td>
+								<td>[[${request.capacity}*${request.product.price}]] TK</td>
+								<td th:text="${request.date}"></td>
+								<td><a
+									th:href="@{storagecapacity(id=${request.product.storage.id})}"
+									class="btn btn-outline-info"><i style="margin-right: 5px;" class="fa fa-window-restore"
+						aria-hidden="true"></i> Storage Capacity</a></td>
+								<td>
+									<form th:action="@{checkout}" method="post">
+										<input type="hidden" name="id" th:value="${request.id}">
+										<button class="btn btn-outline-danger">
+											<i style="margin-right: 5px;" class="fa fa-briefcase"
+						aria-hidden="true"></i> Checkout
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

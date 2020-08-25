@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid" align="center">
+					<br />
+					<div style="font-size: 35px; font-family: fantasy; color: #17a2b8;"
+						th:if="${msg}" th:utext="${msg}"></div>
+					<div align="center" class="">
+						<form th:action="@{addoffer}" method="post" style="width: 400px">
+							<br />
+							<button
+								style="background: #17a2b8; color: #ffffff; font-family: serif"
+								class="form-control">Please Fill The Specific Field</button>
+							<br /> <input type="hidden" name="storageid"
+								th:value="${storageid}"> <input type="hidden" name="id"
+								th:value="${offer.id}">
+							<div class="form-group" th:if=${offer.id}
+								style="text-align: left">
+								<label>Offer Posted date</label> <input type="text"
+									maxlength="10" readonly class="form-control" id="date"
+									th:value="${offer.date}" />
+							</div>
+							<div class="form-group" style="text-align: left">
+								<label>Duration</label> <input type="number" required
+									class="form-control" name="duration" id="duration"
+									placeholder="Duration :" th:value="${offer.duration}" />
+							</div>
+							<div class="form-group" style="text-align: left">
+								<label>Discount(%)</label> <input type="number" name="discount"
+									th:value="${offer.discount}" id="discount" required
+									class="form-control"
+									placeholder="Discount : (calculate as percentage)" />
+							</div>
+							<div class="form-group">
+								<button style="width: 190px; margin-right: 10px;" type="submit"
+									class="btn btn-outline-info" name="add" value="add">
+									<i class="fa fa-save"></i> Save Changes
+								</button>
+								<a th:if="${offer.id}" th:href="@{deleteoffer(id=${offer.id})}"
+									style="width: 190px" type="submit"
+									class="btn btn-outline-danger"><i
+									style="margin-right: 5px;" class="fa fa-trash"
+									aria-hidden="true"></i> Delete Offer</a>
+								<button th:if="${offer.id}==null" disabled style="width: 190px;"
+									class="btn btn-outline-danger">
+									<i style="margin-right: 5px;" class="fa fa-trash"
+										aria-hidden="true"></i> Delete Offer
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

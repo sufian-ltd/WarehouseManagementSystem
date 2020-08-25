@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/part :: header1" />
+<body
+	style="font-family: serif; color: #fff; background-color: #002636;">
+	<div class="container" align="center">
+		<br>
+		<h3>Warehouse Management System</h3>
+		<hr style="background-color: #fff;" />
+		<form th:action="@{addstorage}" method="post" style="width: 436px">
+			<img th:src="@{/image/c.jpg}"
+				style="width: 200px; height: 200px; border-radius: 50%;"> <input
+				type="hidden" name="latitude" id="latId"> <input
+				type="hidden" name="longitude" id="lonId">
+			<div class="form-group" style="text-align: left;">
+				<label>Storage Name</label> <input type="text" class="form-control" maxlength="15"
+					required name="name" id="name" placeholder="Storage Name :" />
+			</div>
+			<div class="form-group" style="text-align: left;">
+				<label>Total Capacity</label> <input type="number" min="100" max="1000000"
+					class="form-control" required name="totalCapacity"
+					id="totalcapacity" placeholder="Total Capacity :" />
+			</div>
+			<div class="form-group" style="text-align: left;">
+				<label>Location</label> <input type="text" class="form-control" maxlength="15"
+					required name="location" id="location" placeholder="Location : " />
+			</div>
+			<div class="form-group">
+				<a th:href="@{storages}" style="width: 132px; margin-right: 16px;"
+					class="btn btn-danger"><i style="margin-right: 5px;"
+					class="fa fa-times" aria-hidden="true"></i> Cancel</a> <a
+					style="width: 132px; margin-right: 16px;" class="btn btn-info"
+					onclick="getLocation()"><i style="margin-right: 5px;"
+					class="fa fa-map-marker" aria-hidden="true"></i> Save Position</a>
+				<button style="width: 132px" type="submit" class="btn btn-warning"
+					name="add">
+					<i style="margin-right: 5px;" class="fa fa-check"
+						aria-hidden="true"></i> Save
+				</button>
+			</div>
+		</form>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+</body>
+<script>
+	var latId = document.getElementById("latId");
+	var lonId = document.getElementById("lonId");
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		}
+	}
+
+	function showPosition(position) {
+		var lat = position.coords.latitude;
+		var lon = position.coords.longitude;
+
+		latId.value = lat;
+		lonId.value = lon;
+	}
+</script>
+</html>

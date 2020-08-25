@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<a th:href="@{transactionreport}"
+						style="margin-bottom: 10px; margin-top: 10px;"
+						class="btn btn-outline-info"><span class="fa fa-print"></span> Generate Report</a>
+					<table id="example"
+						class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr align="center">
+								<th>Storage ID</th>
+								<th>Storage Name</th>
+								<th>Product</th>
+								<th>Total Weight</th>
+								<th>Duration</th>
+								<th>Total Cost</th>
+								<th>Checkout Date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="request : ${productRequestsList}">
+								<td th:text="${request.product.storage.id}"></td>
+								<td th:text="${request.product.storage.name}"></td>
+								<td th:text="${request.product.name}"></td>
+								<td>[[${request.capacity}]] Ton</td>
+								<td>[[${request.duration}]] Days</td>
+								<td>[[${request.cost}]] TK</td>
+								<td th:text="${request.date}"></td>
+								<td><a
+									th:href="@{storagecapacity(id=${request.product.storage.id})}"
+									class="btn btn-outline-info"><span class="fa fa-line-chart"></span>
+										Storage Capacity</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

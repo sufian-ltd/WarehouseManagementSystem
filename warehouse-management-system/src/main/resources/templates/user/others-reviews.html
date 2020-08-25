@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+		<br>
+		<div
+			style="text-align: center; color: #17a2b8;font-weight: bold; text-transform: uppercase; font-size: 17px;">
+			<span>People's Feedback To This Storage</span>
+		</div>
+		<div th:each="review : ${reviews}">
+			<p style="font-weight: 600;">
+				<i style="color: #17a2b8;" class="fa fa-address-card"></i> <span
+					th:text="${review.user.username}"
+					style="font-weight: 600; color: #17a2b8;"></span><span
+					th:text="'Posted At : ' + ${review.date}"
+					style="float: right; color: #17a2b8;"><i
+					style="color: #17a2b8;" class="fa fa-watch"></i></span>
+			</p>
+
+			<p style="font-weight: 600;">
+				<i style="color: #17a2b8;" class="fa fa-university"></i> <span
+					th:text="${review.storage.name}"
+					style="color: #17a2b8; font-weight: bold;"></span>
+			</p>
+			<p style="color: #4e4e4e; text-decoration: none"
+				th:text="${review.message}"></p>
+			<hr style="background-color: #e4e4e4;">
+		</div>
+	</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

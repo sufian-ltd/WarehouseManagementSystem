@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br>
+					<div
+						style="text-align: center; color: #17a2b8; font-weight: bold; text-transform: uppercase; font-size: 17px;">
+						<span>Product Checkout Full Summary</span>
+					</div>
+					<br>
+					<div style="display: inline-block; width: 33%;">
+						<a
+							style="font-family: serif; background-color: #17a2b8; color: white; width: 100%"
+							class="btn container">The Storage Details</a>
+						<table class="table table-bordered">
+							<tr align="center">
+								<th>ID</th>
+								<td th:text="${request.product.storage.id}"></td>
+							</tr>
+							<tr align="center">
+								<th>Name</th>
+								<td th:text="${request.product.storage.name}"></td>
+							</tr>
+							<tr align="center">
+								<th>Location</th>
+								<td th:text="${request.product.storage.location}"></td>
+							</tr>
+							<tr align="center" th:if="${request.product.storage.offer}">
+								<th>Discount</th>
+								<td
+									style="color: #17a2b8; font-family: fantasy; font-style: oblique; font-size: 18px;">
+									[[${request.product.storage.offer.discount}]]% OFF</td>
+							</tr>
+						</table>
+					</div>
+					<div style="display: inline-block; width: 33%;">
+						<a
+							style="font-family: serif; background-color: #17a2b8; color: white; width: 100%"
+							class="btn container">Checkout Product Details</a>
+						<table class="table table-bordered">
+							<tr align="center">
+								<th>ID</th>
+								<td th:text="${request.id}"></td>
+							</tr>
+							<tr align="center">
+								<th>Product Name</th>
+								<td th:text="${request.product.name}"></td>
+							</tr>
+							<tr align="center">
+								<th>Product Weight</th>
+								<td th:text="${request.capacity}"></td>
+							</tr>
+							<tr align="center">
+								<th>Duration</th>
+								<td th:text="${request.duration}"></td>
+							</tr>
+							<tr align="center">
+								<th>Checkout Date</th>
+								<td th:text="${request.date}"></td>
+							</tr>
+							<tr align="center">
+								<th>Total Cost</th>
+								<td
+									style="color: red; font-family: fantasy; font-style: oblique; font-size: 18px;">
+									[[${totalcost}]] TK</td>
+							</tr>
+							<tr align="center">
+								<th>Discount</th>
+								<td th:if="${request.product.storage.offer}"
+									style="color: #17a2b8; font-family: fantasy; font-style: oblique; font-size: 18px;">
+									[[${request.product.storage.offer.discount}]]% OFF</td>
+								<td th:if="!${request.product.storage.offer}"
+									style="color: #17a2b8; font-family: fantasy; font-style: oblique; font-size: 18px;">
+									No Discount</td>
+							</tr>
+							<tr align="center" th:if="${maincost}">
+								<th>After Discount</th>
+								<td
+									style="color: red; font-family: fantasy; font-style: oblique; font-size: 18px;">
+									[[${maincost}]] TK</td>
+							</tr>
+						</table>
+					</div>
+					<div style="display: inline-block; width: 33%;">
+						<a
+							style="font-family: serif; background-color: #17a2b8; color: white; width: 100%"
+							class="btn container">Customer Details</a>
+						<table class="table table-bordered">
+							<tr align="center">
+								<th>ID</th>
+								<td th:text="${request.user.id}"></td>
+							</tr>
+							<tr align="center">
+								<th>Email</th>
+								<td th:text="${request.user.email}"></td>
+							</tr>
+							<tr align="center">
+								<th>Phone</th>
+								<td th:text="${request.user.phone}"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>
+

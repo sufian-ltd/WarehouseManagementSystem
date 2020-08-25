@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif; font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br>
+					<table id="example1"
+						class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Storage Name</th>
+								<th>Total Capacity</th>
+								<th>Available Capacity</th>
+								<th>Location</th>
+								<th>Status</th>
+								<th>Discount(%)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td th:text="${storage.name}"></td>
+								<td>[[${storage.totalCapacity}]] Ton</td>
+								<td>[[${storage.availableCapacity}]] Ton</td>
+								<td th:text="${storage.location}"></td>
+								<td th:text="Active"></td>
+								<td th:if="!${storage.offer}">No Discount</td>
+								<td th:if="${storage.offer}" th:text="${storage.offer.discount}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<hr>
+					<!-- 					<a -->
+					<!-- 						style="font-family: serif; background-color: #343a40; color: white; width: 100%;" -->
+					<!-- 						class="btn">List of Products and Products capacity for this -->
+					<!-- 						storage</a><br><br> -->
+					<table id="example2"
+						class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Product Name</th>
+								<th>Total Capacity</th>
+								<th>Available Capacity</th>
+								<th>Price(1ton/per-day)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="product : ${storage.products}">
+								<td th:text="${product.name}"></td>
+								<td>[[${product.totalCapacity}]] Ton</td>
+								<td>[[${product.availableCapacity}]] Ton</td>
+								<td>[[${product.price}]] TK</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example1').DataTable();
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example2').DataTable();
+		});
+	</script>
+</html>

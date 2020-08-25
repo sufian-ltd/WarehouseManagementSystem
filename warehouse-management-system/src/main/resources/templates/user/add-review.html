@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid" align="center">
+					<br> <br>
+					<div style="margin: 0 auto;">
+						<div
+							style="text-align: center; color: #17a2b8; border-bottom: 1px solid #ccdad6; padding-bottom: 10px; font-weight: bold; text-transform: uppercase; font-size: 17px;">
+							<span>Send Your Feedback to Storage : </span><span
+								th:text="${storage.name}"></span>
+						</div>
+						<br />
+						<form th:action="${addreview}" method="post"
+							style="text-align: center;">
+							<div class="alert alert-success" th:if="${msg}" th:utext="${msg}"></div>
+							<input type="hidden" name="storageId" th:value="${storage.id}">
+							<label style="float: left;color:#17a2b8;">Add Your Review here</label>
+							<div class="input-group">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-envelope"></i></span>
+								<textarea
+									style="resize: none; max-width: 545px; max-height: 190px; min-height: 190px; min-width: 545px;"
+									required type="text" class="form-control" name="message"
+									maxlength="200" placeholder="Your opinion"></textarea>
+							</div>
+							<br>
+							<div class="input-group">
+								<button style="width: 120px;" type="submit"
+									class="btn btn-info">
+									<i class="fa fa-send"></i> Send
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+</body>
+</html>

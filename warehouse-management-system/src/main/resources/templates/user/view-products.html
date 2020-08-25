@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head>
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap4.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+</head>
+<body onload="initChart();" class="sb-nav-fixed"
+	style="font-family: serif; font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+
+					<br /> <input type="hidden" id="storageid" th:value="${storageid}">
+					<div id="chartContainer" hidden="true"
+						style="width: 100%; height: 300px; margin-bottom: 20px;"></div>
+					<div id="chartBtn" onclick="getData();"
+						style="user-select: none; float: left; font-weight: 600; padding: 10px; cursor: pointer;"
+						class="alert alert-danger"></div>
+					<div
+						style="user-select: none; float: right; font-weight: 600; padding: 10px;"
+						class="alert alert-info" th:if="${discount}"><i class="fa fa-gift"></i> [[${discount}]]</div>
+					<a
+						style="font-family: serif; background-color: #17a2b8; color: white; width: 100%;"
+						class="btn">List of Products and Products capacity for this
+						Storage</a><br><br>
+					<table id="example" class="table table-bordered table-hover table-striped">
+						<thead>
+						<tr>
+							<th>Storage Name</th>
+							<th>Product Name</th>
+							<th>Total Capacity(tons)</th>
+							<th>Available Capacity(tons)</th>
+							<th>Price(1ton/per-day)</th>
+							<th>Action</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="product : ${productList}">
+							<td th:text="${product.storage.name}"></td>
+							<td th:text="${product.name}"></td>
+							<td>[[${product.totalCapacity}]] Ton</td>
+							<td>[[${product.availableCapacity}]] Ton</td>
+							<td>[[${product.price}]] TK</td>
+							<td><a th:href="@{sendrequest(id=${product.id})}"
+								class="btn btn-info"><i class="fa fa-send"></i>
+									Send Request</a></td>
+						</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#example').DataTable();
+	});
+</script>
+<script type="text/javascript">
+	var dps = [];
+	var storageName;
+	var loc;
+
+	initChart = function() {
+		$("#chartBtn").text("Click to Show Product Statistics");
+	}
+
+	getData = function() {
+		if ($("#chartContainer").attr("hidden") == "hidden") {
+			$("#chartContainer").attr("hidden", false);
+			$("#chartBtn").text("Click to Hide Product Statistics");
+		} else {
+			$("#chartContainer").attr("hidden", true);
+			$("#chartBtn").text("Click to Show Product Statistics");
+		}
+		dps = [];
+		var storageid = $("#storageid").val();
+		$.ajax({
+			url : 'productstatisticsdata',
+			type : 'POST',
+			data : {
+				id : storageid
+			},
+			success : function(response) {
+				$.each(response.data, function(index, value) {
+					dps.push({
+						"y" : value.yValue,
+						"label" : value.labelValue
+					});
+				});
+				storageName = response.storageName;
+				loc = response.loc;
+				loadChart();
+			}
+		});
+
+	}
+
+	loadChart = function() {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme : "dark1",
+			animationEnabled : true,
+			title : {
+				text : "Storage Name: " + storageName + " , Location: " + loc
+			},
+			data : [ {
+				type : "pie",
+				showInLegend : true,
+				legendText : "{label}",
+				toolTipContent : "{label}: <strong>{y}%</strong>",
+				yValueFormatString : "#,##0.00\"%\"",
+				indexLabel : "{label} ({y})",
+				dataPoints : dps
+			} ]
+		});
+		chart.render();
+	}
+</script>
+</html>

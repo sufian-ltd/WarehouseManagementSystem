@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif; font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br />
+					<!--     <a style="font-family: serif; background-color: #003e58; color: white;width:100%;" -->
+					<!-- 		class="btn">Your Accepted Request List</a> -->
+					<table id="example"
+						class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Total Capacity</th>
+								<th>Available Capacity</th>
+								<th>Location</th>
+								<th>Action</th>
+								<th>Action</th>
+								<th>Action</th>
+								<th>Action</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="storage : ${storagesList}">
+								<td th:text="${storage.name}"></td>
+								<td th:text="${storage.totalCapacity}"></td>
+								<td th:text="${storage.availableCapacity}"></td>
+								<td th:text="${storage.location}"></td>
+								<td><a th:href="@{othersreviews(id=${storage.id})}"
+									class="btn btn-secondary"><i class="fa fa-address-card"></i>
+										Reviews</a></td>
+								<td><a th:if="${storage.offer}" class="btn btn-primary"
+									th:href="@{viewoffer(id=${storage.id})}"><i
+										class="fa fa-gift"></i> View Offers</a> <a
+									th:if="not ${storage.offer}"
+									class="btn btn-primary"><i class="fa fa-gift"></i> No
+										Offers</a></td>
+								<td><a th:href="@{checkdetails(id=${storage.id})}"
+									class="btn btn-danger"><i class="fa fa-line-chart"></i>
+										Check Details</a></td>
+								<td><a th:href="@{checkdetails(id=${storage.id})}"
+									class="btn btn-success"><i class="fa fa-map-marker"></i>
+										View Location</a></td>
+								<td><a th:href="@{addreview(id=${storage.id})}"
+									class="btn btn-info"><i class="fa fa-star"></i> Add Review</a></td>
+
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

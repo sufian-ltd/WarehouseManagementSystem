@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+	<div class="container-fluid" align="center">
+    <br/>
+    <div class="alert alert-info" th:if="${msg}" th:utext="${msg}"></div>
+    <br/>
+		<form th:action="${sendrequest}" method="post" style="width: 70%;">
+		<a style="font-family: serif; background-color: #003e58; color: white;width:100%;"
+		class="btn">Please Complete Request Process</a>
+	        <table class="table table-bordered">
+			<tr align="center">
+				<th>Storage Name</th>
+				<td th:text="${product.storage.name}"></td>
+			</tr>
+			<tr align="center">
+				<th>Product Name</th>
+				<td th:text="${product.name}"></td>
+			</tr>
+			<tr align="center">
+				<th>Total Capacity(ton)</th>
+				<td th:text="${product.totalCapacity}"></td>
+			</tr>
+			<tr align="center">
+				<th>Available capacity(ton)</th>
+				<td th:text="${product.availableCapacity}"></td>
+			</tr>
+			<tr align="center">
+				<th>Price 1day/1Ton</th>
+				<td>[[${product.price}]] TK</td>
+			</tr>
+			<tr th:if="${product.storage.offer}" align="center">
+				<th>Discount(%)</th>
+				<td style="color: red; font-family: fantasy; font-style: oblique; font-size: 18px;">
+				[[${product.storage.offer.discount}]]%</td>
+			</tr>
+			<tr align="center">
+				<th>Your Needed Capacity</th>
+				<td>
+					<input type="number" min="1" max="100000" placeholder="weight(ton)" name="weight" class="form-control" required>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="hidden" name="productId" th:value="${product.id}">
+					<button type="submit" class="btn btn-info"><i class="fa fa-send"></i> Yes I confirm</button>
+				</td>
+			</tr>
+			</table>
+		</form>            
+	</div>	
+</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

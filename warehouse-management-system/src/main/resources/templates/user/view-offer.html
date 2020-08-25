@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/part :: header1" />
+<body class="sb-nav-fixed" style="font-family: serif; font-size: 14px;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part-user :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid" align="center">
+					<div style="margin-top:15px;;font-size: 35px; font-family: fantasy; color: #17a2b8;">WOW...!!!
+						Found a offer!!!!!!</div>
+					<br>
+					<br> <a
+						style="font-family: serif; background-color: #17a2b8; color: white; width: 400px"
+						class="btn container">The Storage Offer Details</a>
+					<table class="table table-bordered" style="width: 400px;">
+						<tr align="center">
+							<th>ID</th>
+							<td th:text="${offer.id}"></td>
+						</tr>
+						<tr align="center">
+							<th>Storage Name</th>
+							<td th:text="${offer.storage.name}"></td>
+						</tr>
+						<tr align="center">
+							<th>Storage Location</th>
+							<td th:text="${offer.storage.location}"></td>
+						</tr>
+						<tr align="center">
+							<th>Offer Value</th>
+							<td
+								style="color: #17a2b8; font-family: fantasy; font-style: oblique; font-size: 18px;">
+								[[${offer.discount}]]% OFF</td>
+						</tr>
+						<tr align="center">
+							<th>Offer Posted Date</th>
+							<td th:text="${offer.date}"></td>
+						</tr>
+						<tr align="center">
+							<th>Offers Days</th>
+							<td th:text="${offer.duration}"></td>
+						</tr>
+					</table>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head>
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap4.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body onload="getData();" class="sb-nav-fixed" style="font-family: serif;">
+	<nav th:replace="common/part :: header2"></nav>
+	<div id="layoutSidenav">
+		<div th:replace="common/part :: header3"></div>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid">
+					<br /> <br>
+					<div id="chartContainer"></div>
+				</div>
+			</main>
+			<footer th:replace="common/part :: header4"></footer>
+		</div>
+	</div>
+	<div th:replace="common/part :: header5"></div>
+</body>
+<script type="text/javascript">
+	var dps = [];
+
+	getData = function() {
+
+		$.ajax({
+			url : 'storagestatisticsdata',
+			type : 'POST',
+			success : function(response) {
+				$.each(response, function(index, value) {
+					dps.push({
+						"y" : value.yValue,
+						"label" : value.labelValue
+					});
+				});
+				loadChart();
+			}
+		});
+
+	}
+
+	loadChart = function() {
+
+		var chart = new CanvasJS.Chart(
+				"chartContainer",
+				{
+					animationEnabled : true,
+					exportEnabled : true,
+					theme : "dark1", // "light1", "light2", "dark1", "dark2"
+					title : {
+						text : "Your All Storage Statistics Followed By Available Capacity"
+					},
+					axisY : {
+						title : "Available Capacity",
+						prefix : "",
+						suffix : ""
+					},
+					data : [ {
+						type : "bar",
+						yValueFormatString : "Available #,##0",
+						indexLabel : "{y}",
+						indexLabelPlacement : "inside",
+						indexLabelFontWeight : "bolder",
+						indexLabelFontColor : "white",
+						dataPoints : dps
+					} ]
+				});
+
+		chart.render();
+
+	}
+</script>
+</html>

@@ -1,0 +1,38 @@
+<div th:fragment="header3" id="layoutSidenav_nav">
+	<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion"
+		style="font-size: 17px;">
+		<div class="sb-sidenav-menu" style="background-color: #002636;">
+			<div class="nav">
+
+				<a class="nav-link" th:href="@{/users/dashboard}"> <i
+					style="margin-right: 5px;" class="fa fa-tachometer"
+					aria-hidden="true"></i> Home
+				</a> <a class="nav-link" th:href="@{/users/findstorages}"><i
+					class="fa fa-university" aria-hidden="true"
+					style="margin-right: 5px;"></i> Find-Storage</a><a class="nav-link"
+					th:href="@{/users/pendingrequest}"> <i class="fa fa-user-plus"
+					aria-hidden="true" style="margin-right: 5px;"></i> Pending-Requests
+				</a> <a class="nav-link" th:href="@{/users/acceptedrequest}"> <i
+					class="fa fa-google-wallet" aria-hidden="true"
+					style="margin-right: 5px;"></i> Approved-Requests
+				</a> <a class="nav-link" th:href="@{/users/transaction}"> <i
+					class="fa fa-bar-chart" aria-hidden="true"
+					style="margin-right: 5px;"></i> My-Transaction
+				</a> <a class="nav-link" th:href="@{/users/myreviews}"> <i
+					style="margin-right: 5px;" class="fa fa-calendar"
+					aria-hidden="true"></i> My-Feedback
+				</a> <a class="nav-link" th:href="@{/profile}"> <i
+					style="margin-right: 5px;" class="fa fa-user" aria-hidden="true"></i>
+					Profile
+				</a>
+			</div>
+		</div>
+		<div class="sb-sidenav-footer" style="background-color: #004f6f">
+			<div class="nav">
+				<a style="color: #fff;" class="nav-link" th:href="@{/logout}"> <i
+					class="fa fa-sign-out"></i> Logout
+				</a>
+			</div>
+		</div>
+	</nav>
+</div>
